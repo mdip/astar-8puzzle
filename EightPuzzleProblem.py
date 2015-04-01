@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-Rappresentazione del gioco dell'otto.
+Eight puzzle problem.
 """
 
 from Node import Node
@@ -9,7 +9,7 @@ from Node import Node
 
 class State(object):
     """
-    Rappresentazione di uno stato del problema.
+    Representation of a problem's state.
     """
 
     def __init__(self, config=None):
@@ -40,16 +40,19 @@ class State(object):
 
     def __hash__(self):
         """
-        Hash della configurazione corrente
+        Hash of the current configuration.
         """
         return hash(tuple(self.__config))
 
 
 class EightPuzzleProblem(object):
     """
-    Rappresentazione del problema, della funzione successori,
-    della funzione costo del cammino, della funzione euristica e
-    della funzione che restituisce la soluzione del problema.
+    Representations of:
+        - 8-puzzle problem
+        - successors function,
+        - g(n)
+        - h(n)
+        - the function that returns the problem's solution (if it exists).
     """
 
     def __init__(self, start, goal):
@@ -85,9 +88,8 @@ class EightPuzzleProblem(object):
 
     def get_current_coord(self, pos):
         '''
-            Data una posizione in un array
-            restituisce le coordinate della
-            board per il gioco dell'otto.
+            Given a position in a list,
+            it returns the respective coordinates of the 8-puzzle game's board.
         '''
         y = pos % 3 + 1
         x = pos / 3 + 1
@@ -95,8 +97,8 @@ class EightPuzzleProblem(object):
 
     def get_list_pos(self, x, y):
         '''
-           Date le coordinate, ritorna la posizione dell'elemento
-           associato alle coordinate all'interno di una lista.
+           Given the coordinates,
+           it returns the respective position in a list of positions.
         '''
         pos = ((x - 1) * 3) + (y - 1)
         return pos
@@ -106,7 +108,7 @@ class EightPuzzleProblem(object):
 
     def manhattan(self, n):
         """
-            Distanza di Manhattan
+            Manhattan distance
         """
         dist = 0
         values = n.content.config
@@ -119,7 +121,7 @@ class EightPuzzleProblem(object):
 
     def misplaced_tiles(self, n):
         """
-            Tasselli fuoriposto
+            Misplaced tiles
         """
         dist = 0
         values = n.content.config
@@ -131,11 +133,11 @@ class EightPuzzleProblem(object):
     def f(self, n):
         """
             f(n) = g(n) + h(n)
-            in questo caso h = manhattan
+            the default case is h = manhattan
         """
         return (n.g + self.heuristic(n))
 
-    # Path dalla soluzione allo stato di partenza
+    # Path of the solution from start node
     def path(self, goal, start):
         if goal == start:
             return [goal]
@@ -144,7 +146,7 @@ class EightPuzzleProblem(object):
         else:
             return []
 
-    # Funzione successori definita in base al contesto, in questo caso il gioco dell'8
+    # Successors function defined for the context of the 8-puzzle game
     def successors(self, node):
         succ_list = []
         state = node.content
@@ -163,7 +165,8 @@ class EightPuzzleProblem(object):
             n = Node(new_state)
             succ_list.append(n)
             #print 'UP'
-
+        
+        # down
         if x < 3:
             new_x = x + 1
             new_y = y
@@ -176,6 +179,7 @@ class EightPuzzleProblem(object):
             succ_list.append(n)
             #print 'DOWN'
 
+        # left
         if y > 1:
             new_x = x
             new_y = y - 1
@@ -188,6 +192,7 @@ class EightPuzzleProblem(object):
             succ_list.append(n)
             #print 'LEFT'
 
+        # right
         if y < 3:
             new_x = x
             new_y = y+1
@@ -200,6 +205,6 @@ class EightPuzzleProblem(object):
             succ_list.append(n)
             #print 'RIGHT'
 
-        #genera successori in base alle mosse possibili
+        #return the successors' list generated according to the possibile moves
         return succ_list
 
