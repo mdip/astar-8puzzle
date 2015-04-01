@@ -3,7 +3,7 @@
 
 class Node(object):
     """
-    Nodo del grafo di un problema di ricerca.
+    Node of the graph used for a search problem.
     """
 
     def __init__(self, content=None):
