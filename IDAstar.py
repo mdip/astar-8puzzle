@@ -1,23 +1,16 @@
 #!/usr/bin/env python
 
+# WARNING: this implementation should be fixed.
+
 """
 Iterative Deeping A* Algorithm (IDA*)
 
-Ripete una depth first search limitata scartando i rami che superano
-un determinato costo basato su f(n). Se al termine della ricerca un goal
-non e' stato trovato, incrementa il limite e ricomincia.
-Rispetto ad A* il numero di nodi espansi e' maggiore ma evita la saturazione
-delle risorse e produce il cammino migliore in un tempo equivalente ad A*.
-
-La funzione f(n) = g(n) + h(n) e' alla base dell'algoritmo:
-- g(n) indica la distanza di <n> dal nodo start di partenza.
-- h(n) stima la distanza da <n> al nodo goal di arrivo.
-
-f(n) rappresenta il cammino meno costoso dal nodo <start> al nodo <goal>.
-
-h(n) e' una funzione euristica che stima il costo
-di un cammino dal nodo <n> al nodo <goal>.
-La funzione si dice ammissibile se non sovrastima il costo.
+See the A* implementation for the algorithm descritpion.
+This implementation is an iterative version described by Professor Richard Korf in 1985.
+It repeats a bounded depth-first search to cut path that are longer than a function f(n).
+If no solution is found, then it increases the maximum bound and try to find a solution again.
+It expands more nodes but it avoids resource's saturation and it finds the best path
+using the same time of the classic A* algorithm.
 
 """
 
