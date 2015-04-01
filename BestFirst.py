@@ -4,7 +4,7 @@
 
 Best First Search
 
-Graph Search con ordinamento di OPEN rispetto ad h(n).
+Graph Search whit oreded OPEN list according to h(n).
 
 """
 
@@ -19,13 +19,13 @@ def BestFirstSearch(problem):
     start = problem.start
     goal = problem.goal
 
-    # Crea un dizionario CLOSED ed una lista OPEN che verra' gestita
-    # come un heap ordinato in base a f(n) = g(n) + h(n).
+    # Create a dictionery CLOSED.
+    # Create a list OPEN that will be managed as an ordered heap according to f(n) = g(n) + h(n).
 
     OPEN = []
     CLOSED = {}
 
-    c = 0  # contatore nodi considerati
+    c = 0  # counter of considered nodes
 
     start.f = problem.f(start)
     heapq.heappush(OPEN, start)
@@ -42,8 +42,8 @@ def BestFirstSearch(problem):
         s = problem.successors(n)
 
         for suc in s:
-            # Per ogni successore imposta come genitore il nodo n,
-            # calcola f(n) considerando solamente h(n)
+            # for every successor set the node n as the parent node,
+            # calculate f(n) considering only h(n)
             suc.parent = n
             suc.f = problem.f(suc)
 
