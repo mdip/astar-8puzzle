@@ -14,7 +14,7 @@ h(n) if an heuristic function and it should never overestimate the cost of the p
 If h(n) =< d(n,g) + h(g) for every edge (n,g) then A* works better because you are using a monothonic
 function that will not consider a node more than one time.
 
-This implementation is oriented to time optimiztion; it will be used more space.
+This implementation is oriented to time optimization; it will be used more space.
 
 """
 
