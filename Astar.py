@@ -3,18 +3,19 @@
 """
 A* Algorithm
 
-La funzione f(n) = g(n) + h(n) e' alla base dell'algoritmo:
-- g(n) indica la distanza di <n> dal nodo start di partenza.
-- h(n) stima la distanza da <n> al nodo goal di arrivo.
+The function f(n) = g(n) + h(n) is the bases of this algorithm:
+- g(n) is the distance of the node <n> from the start node.
+- h(n) estimates the distance of node <n> to the goal node.
 
-f(n) rappresenta il cammino meno costoso dal nodo <start> al nodo <goal>.
+f(n) is the best path from <start> to <goal>, under certain conditions.
 
-h(n) e' una funzione euristica che stima il costo
-di un cammino dal nodo <n> al nodo <goal>.
-La funzione si dice ammissibile se non sovrastima il costo.
+h(n) if an heuristic function and it should never overestimate the cost of the path to be an admissible function.
 
-Implementazione con restrizione monotonica --> serve una euristica 
-con restrizione monotonica.
+If h(n) =< d(n,g) + h(g) for every edge (n,g) then A* works better because you are using a monothonic
+function that will not consider a node more than one time.
+
+This implementation is oriented to time optimiztion; it will be used more space.
+
 """
 
 import heapq
@@ -22,8 +23,8 @@ import heapq
 from EightPuzzleProblem import EightPuzzleProblem, State
 
 #@profile
-# Attivare profile per controllare l'utilizzo di memoria
-# per utilizzare @profile il comando e':
+# Enable this annotation to check the memory usage.
+# To enable @profile start python in this way:
 # python -m memory_profiler example.py
 
 
@@ -32,13 +33,14 @@ def Astar(problem):
     goal = problem.goal
 
     c = 0
-    # Crea un dizionario CLOSED ed una lista OPEN che verra' gestita come un heap ordinato in base a f(n) = g(n) + h(n).
-    # Crea un dizionario OPENDICT per un accesso O(1) nelle fasi di verifica.
+    # Create a dictionary CLOSED.
+    # Create a list OPEN that will be managed as an ordered heap according to f(n) = g(n) + h(n).
+    # Create a dictionary OPENDICT to access in O(1) in the check phases.
 
     OPEN = []
     CLOSED = {}
 
-    c = 0  # contatore nodi considerati
+    c = 0  # counter of considered nodes
 
     start.f = problem.heuristic(start)
     heapq.heappush(OPEN, start)
@@ -57,12 +59,12 @@ def Astar(problem):
 
         s = problem.successors(n)
 
-        dist = n.g  # distanza del nodo n dal nodo start
-        dist_suc = dist+1  # distanza di ogni successore di n dal nodo start
+        dist = n.g  # distance of node n from start node
+        dist_suc = dist+1  # distance of every successor of n from start node
 
         for suc in s:
-            # Per ogni successore imposta come genitore il nodo n,
-            # incrementa di 1 la distanza da start e calcola f(n)
+            # for every successor sets the node n as parent node,
+            # increment by 1 the distance from start and calculate f(n)
             suc.parent = n
             suc.g = dist_suc
             suc.f = problem.f(suc)
