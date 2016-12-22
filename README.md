@@ -1,3 +1,3 @@
-#Eight puzzle problem
+#8-puzzle problem
 
-Eight puzzle problem in python. 
+8-puzzle problem in Python. 
